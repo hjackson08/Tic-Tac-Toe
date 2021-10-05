@@ -1,0 +1,164 @@
+# Display Grid
+spots = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+play = True
+
+# Function for grid visual
+def grid_visual():
+    inc = 1
+    index = 0
+    for i in range(3):
+        print(str(spots[index]) + " | " + str(spots[index+inc]) + " | " + str(spots[index+inc*2]) )
+        index += 3
+        if i < 2:
+            print("-" * 9)
+
+# Tie
+def tie_check():
+    tie = all(isinstance(i, str) for i in spots)
+    if tie == True:
+        print("It's a tie!")
+        return True
+
+# X or O horizontal wins
+def x_wins_horix():
+    if spots[0] == "X" and spots[1] == "X" and spots [2] == "X":
+        print("Player 1 wins!")
+        return True
+    if spots[3] == "X" and spots[4] == "X" and spots [5] == "X":
+        print("Player 1 wins!")
+        return True
+    if spots[6] == "X" and spots[7] == "X" and spots [8] == "X":
+        print("Player 1 wins!")
+        return True
+
+def o_wins_horix():
+    if spots[0] == "O" and spots[1] == "O" and spots [2] == "O":
+        print("Player 2 wins!")
+        return True
+    if spots[3] == "O" and spots[4] == "O" and spots [5] == "O":
+        print("Player 2 wins!")
+        return True
+    if spots[6] == "O" and spots[7] == "O" and spots [8] == "O":
+        print("Player 2 wins!")
+        return True
+
+# X or O vertical wins
+def x_wins_vert():
+    if spots[0] == "X" and spots[3] == "X" and spots[6] == "X":
+        print("Player 1 wins!")
+        return True
+    if spots[1] == "X" and spots[4] == "X" and spots[7] == "X":
+        print("Player 1 wins!")
+        return True
+    if spots[2] == "X" and spots[5] == "X" and spots[8] == "X":
+        print("Player 1 wins!")
+        return True
+
+def o_wins_vert():
+    if spots[0] == "O" and spots[3] == "O" and spots[6] == "O":
+        print("Player 2 wins!")
+        return True
+    if spots[1] == "O" and spots[4] == "O" and spots[7] == "O":
+        print("Player 2 wins!")
+        return True
+    if spots[2] == "O" and spots[5] == "O" and spots[8] == "O":
+        print("Player 2 wins!")
+        return True
+
+# X or O diagonal wins
+def x_wins_diag():
+    if spots[0] == "X" and spots[4] == "X" and spots[8] == "X":
+        print("Player 1 wins!")
+        return True
+    elif spots[2] == "X" and spots[4] == "X" and spots[6] == "X":
+        print("Player 1 wins!")
+        return True
+
+def o_wins_diag():
+    if spots[0] == "O" and spots[4] == "O" and spots[8] == "O":
+        print("Player 2 wins!")
+        return True
+    elif spots[2] == "O" and spots[4] == "O" and spots[6] == "O":
+        print("Player 2 wins!")
+        return True
+
+# Check for winning positions
+def winning_pos():
+    # Check horizontal win for X
+    if x_wins_horix():
+        return True
+
+    # Check horizontal win for O
+    if o_wins_horix():
+        return True
+
+    # Check vertical win for X
+    if x_wins_vert():
+        return True
+
+    # Check vertical win for O
+    if o_wins_vert():
+        return True
+
+    # Check diagonal win for X
+    if x_wins_diag():
+        return True
+
+    # Check diagonal win for O
+    if o_wins_diag():
+        return True
+
+    # Check for a tie
+    if tie_check():
+        return True
+
+# Game Play
+def play_game():
+    player_1_turn = True
+    print("\n ~ * ~ * ~  Player 1 will be X, Player 2 will be O  ~ * ~ * ~ \n")
+
+    while play:
+        if player_1_turn:
+            player_1_choice = int(input("Player 1, choose a number to place your X:  \n"))
+
+            if player_1_choice not in spots:
+                player_1_choice = int(input("Hey, that spots taken. Choose an open one! "))
+
+            if player_1_choice in spots:
+                replace = spots.index(player_1_choice)
+                spots[replace] = "X"
+                print()
+
+            grid_visual()
+            print()
+
+            player_1_turn = not player_1_turn
+
+            if winning_pos():
+                break
+
+        else:
+            player_2_choice = int(input("Player 2, choose a number to place your O:  \n"))
+
+            if player_2_choice not in spots:
+                player_2_choice = int(input("Hey, that spots taken. Choose an open one! "))
+
+            if player_2_choice in spots:
+                replace = spots.index(player_2_choice)
+                spots[replace] = "O"
+                print()
+
+            grid_visual()
+            print()
+
+            player_1_turn = not player_1_turn
+
+            if winning_pos():
+                break
+
+grid_visual()
+
+play_game()
+
+print(" \n \n  * ~ * ~ * ~ * GOOD GAME * ~ * ~ * ~ * ")
+
